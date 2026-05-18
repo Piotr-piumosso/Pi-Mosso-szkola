@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trwające zajęcia</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:#f5f5f5;color:#111;max-width:600px;margin:0 auto;padding-bottom:90px}
+    header{background:#1C1C2E;color:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
+    .back{background:rgba(255,255,255,.15);border:none;color:#fff;width:34px;height:34px;border-radius:8px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    header h1{font-size:17px;font-weight:700;flex:1}
+    header p{font-size:12px;opacity:.6;margin-top:1px}
+    .card{background:#fff;border-radius:14px;padding:18px 16px;margin:12px 14px 0}
+    .label{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#aaa;margin-bottom:12px}
+
+    /* Status */
+    .status-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .status-btn{padding:13px 8px;border:2px solid #e5e5e5;border-radius:12px;text-align:center;cursor:pointer;font-size:13px;font-weight:600;color:#666;line-height:1.3;transition:all .15s;user-select:none}
+    .status-btn.span2{grid-column:span 2}
+    .s-green{background:#dcfce7;border-color:#16a34a;color:#15803d}
+    .s-red{background:#fee2e2;border-color:#dc2626;color:#dc2626}
+    .s-orange{background:#fef3c7;border-color:#d97706;color:#b45309}
+
+    /* Chips */
+    .chips{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{padding:8px 14px;border:1.5px solid #e5e5e5;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;color:#444;user-select:none;transition:all .12s;-webkit-tap-highlight-color:transparent}
+    .chip.on{background:#1C1C2E;color:#fff;border-color:#1C1C2E}
+
+    /* Inputs */
+    input[type=text]{width:100%;padding:12px 14px;border:1.5px solid #e5e5e5;border-radius:10px;font-size:16px;font-family:inherit;outline:none}
+    input:focus{border-color:#1C1C2E}
+    textarea{width:100%;padding:12px 14px;border:1.5px solid #e5e5e5;border-radius:10px;font-size:16px;font-family:inherit;outline:none;resize:none;height:80px;line-height:1.5;margin-top:4px}
+    textarea:focus{border-color:#1C1C2E}
+    .url-label{font-size:12px;color:#999;margin:12px 0 6px}
+    .char{font-size:12px;color:#ccc;text-align:right;margin-top:4px}
+
+    /* Save bar */
+    .save-bar{position:fixed;bottom:0;left:0;right:0;padding:12px 16px;background:rgba(245,245,245,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);max-width:600px;margin:0 auto}
+    .save-btn{width:100%;background:#1C1C2E;color:#fff;border:none;padding:16px;border-radius:14px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:.2px;transition:opacity .15s}
+    .save-btn:disabled{opacity:.5}
+    .save-btn:active:not(:disabled){opacity:.8}
+
+    .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 22px;border-radius:20px;font-size:14px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none;z-index:200;white-space:nowrap}
+    .toast.show{opacity:1}
+  </style>
+</head>
+<body>
+<header>
+  <button class="back" onclick="history.back()">←</button>
+  <div>
+    <h1 id="hd-name">Zajęcia</h1>
+    <p id="hd-sub"></p>
+  </div>
+</header>
+
+<!-- Status przygotowania -->
+<div class="card">
+  <div class="label">Status przygotowania</div>
+  <div class="status-grid">
+    <div class="status-btn" id="s0" onclick="setStatus('prepared',this)">✓ Przygotowanie</div>
+    <div class="status-btn" id="s1" onclick="setStatus('unprepared',this)">✗ Nieprzygotowanie</div>
+    <div class="status-btn span2" id="s2" onclick="setStatus('notified',this)">⚠ Zgłoszenie nieprzygotowania</div>
+  </div>
+</div>
+
+<!-- Aktualny utwór -->
+<div class="card">
+  <div class="label">Praca nad utworem</div>
+  <input type="text" id="piece" placeholder="Aktualnie przerabiany utwór...">
+</div>
+
+<!-- Uwagi techniczne -->
+<div class="card">
+  <div class="label">Uwagi techniczne i wykonawcze</div>
+  <div class="chips" id="c-tech"></div>
+</div>
+
+<!-- Metody ćwiczenia -->
+<div class="card">
+  <div class="label">Metody ćwiczenia w domu</div>
+  <div class="chips" id="c-prac"></div>
+  <div class="url-label">Link do nagrania (opcjonalnie)</div>
+  <input type="text" id="rec-url" placeholder="https://youtube.com/...">
+</div>
+
+<!-- Aparat ruchowy -->
+<div class="card">
+  <div class="label">Aparat ruchowy i postawa</div>
+  <div class="chips" id="c-post"></div>
+</div>
+
+<!-- Komentarz -->
+<div class="card">
+  <div class="label">Notatka dla rodzica</div>
+  <textarea id="comment" placeholder="Opcjonalna notatka..." maxlength="140" oninput="document.getElementById('cc').textContent=this.value.length"></textarea>
+  <div class="char"><span id="cc">0</span>/140</div>
+</div>
+
+<div class="save-bar">
+  <button class="save-btn" id="save-btn" onclick="save()">Zapisz zajęcia i wyślij aktualizację</button>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const REPO='Piotr-piumosso/Pi-Mosso-szkola', API='https://api.github.com';
+
+const CHIPS={
+  tech:['Lewa ręka','Prawa ręka','Synchronizacja','Artykulacja','Tempo: zwolnić','Tempo: przyspieszyć','Rytm: wyrównać'],
+  prac:['Metronom','Przepunktowania','Wolne tempo','Ręce osobno','Oburącz','Przygotować do nagrania','Ćwiczyć głośno','Ćwiczyć cicho','Lewa ręka, prawa na sucho','Prawa ręka, lewa na sucho','Śpiewać melodię prawej','Śpiewać melodię lewej','Posłuchać kilku nagrań i wybrać ulubione'],
+  post:['Ułożenie dłoni','Rozluźnić ramiona','Nie napinać palców','Wyprostowane plecy','Nie pochylać postawy','Luźne nadgarstki','Nadgarstki z linią przedramienia']
+};
+
+let status='';
+const statusMap={
+  prepared:{el:'s0',cls:'s-green'},
+  unprepared:{el:'s1',cls:'s-red'},
+  notified:{el:'s2',cls:'s-orange'}
+};
+
+function buildChips(containerId,items){
+  document.getElementById(containerId).innerHTML=items.map(v=>`<div class="chip" data-v="${v}" onclick="this.classList.toggle('on')">${v}</div>`).join('');
+}
+function getChips(id){return[...document.querySelectorAll(`#${id} .chip.on`)].map(c=>c.dataset.v);}
+
+function setStatus(val,el){
+  Object.values(statusMap).forEach(m=>{const e=document.getElementById(m.el);e.className=e.classList.contains('span2')?'status-btn span2':'status-btn';});
+  el.classList.add(statusMap[val].cls);
+  status=val;
+}
+
+async function ghGet(p){
+  const r=await fetch(`${API}/repos/${REPO}/contents/${p}`,{headers:{Authorization:`token ${localStorage.gh_token}`,Accept:'application/vnd.github.v3+json'}});
+  if(!r.ok)throw r.status;
+  const d=await r.json();
+  return{content:JSON.parse(atob(d.content.replace(/\n/g,''))),sha:d.sha};
+}
+async function ghPut(p,content,sha,msg){
+  const body={message:msg,content:btoa(unescape(encodeURIComponent(JSON.stringify(content,null,2))))};
+  if(sha)body.sha=sha;
+  const r=await fetch(`${API}/repos/${REPO}/contents/${p}`,{method:'PUT',headers:{Authorization:`token ${localStorage.gh_token}`,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!r.ok)throw await r.text();
+}
+
+async function save(){
+  if(!status){toast('Zaznacz status przygotowania');return;}
+  const btn=document.getElementById('save-btn');
+  btn.disabled=true; btn.textContent='Zapisywanie...';
+  const entry={
+    date:new Date().toISOString().split('T')[0],
+    timestamp:new Date().toISOString(),
+    status,
+    piece:document.getElementById('piece').value.trim(),
+    technical:getChips('c-tech'),
+    practice:getChips('c-prac'),
+    posture:getChips('c-post'),
+    recordingUrl:document.getElementById('rec-url').value.trim(),
+    comment:document.getElementById('comment').value.trim()
+  };
+  try{
+    const path=`data/lessons/${student.id}.json`;
+    let sha=null, data={studentId:student.id,lessons:[]};
+    try{const ex=await ghGet(path);data=ex.content;sha=ex.sha;}catch(e){}
+    data.lessons.unshift(entry);
+    await ghPut(path,data,sha,`Zajęcia ${student.name} — ${entry.date}`);
+    toast('Zapisano!'); btn.textContent='✓ Zapisano';
+    setTimeout(()=>location.href='index.html',1400);
+  }catch(e){
+    toast('Błąd zapisu. Sprawdź połączenie.');
+    btn.disabled=false; btn.textContent='Zapisz zajęcia i wyślij aktualizację';
+    console.error(e);
+  }
+}
+
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+
+const student=JSON.parse(sessionStorage.getItem('lesson_student')||'null');
+if(!student){location.href='index.html';}
+else{
+  document.getElementById('hd-name').textContent=student.name;
+  document.getElementById('hd-sub').textContent=student.instrument+' · '+new Date().toLocaleDateString('pl-PL');
+  buildChips('c-tech',CHIPS.tech);
+  buildChips('c-prac',CHIPS.prac);
+  buildChips('c-post',CHIPS.post);
+}
+</script>
+</body>
+</html>

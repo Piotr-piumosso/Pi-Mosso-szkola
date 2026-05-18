@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dziennik zajęć</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:#f5f5f5;color:#111;max-width:600px;margin:0 auto;min-height:100vh}
+
+    /* Login */
+    .login-header{background:#1C1C2E;color:#fff;padding:40px 20px 32px;text-align:center}
+    .login-header h1{font-size:20px;font-weight:800;margin-bottom:4px}
+    .login-header p{font-size:14px;opacity:.55}
+    .login-card{background:#fff;border-radius:16px;padding:28px 20px;margin:20px 16px}
+    .login-title{font-size:21px;font-weight:800;margin-bottom:6px}
+    .login-sub{font-size:14px;color:#888;line-height:1.6;margin-bottom:22px}
+    input{width:100%;padding:14px;border:1.5px solid #e5e5e5;border-radius:12px;font-size:16px;font-family:inherit;outline:none;margin-bottom:12px}
+    input:focus{border-color:#1C1C2E}
+    .btn{width:100%;background:#1C1C2E;color:#fff;border:none;padding:16px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit}
+    .btn:active{opacity:.85}
+    .err{color:#dc2626;font-size:14px;margin-bottom:10px;display:none}
+
+    /* Lesson view */
+    .student-top{background:#1C1C2E;color:#fff;padding:24px 20px}
+    .student-top h2{font-size:24px;font-weight:800}
+    .student-top p{font-size:14px;opacity:.55;margin-top:4px}
+
+    .card{background:#fff;border-radius:14px;padding:20px 16px;margin:12px 14px 0}
+    .section-label{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#aaa;margin-bottom:12px}
+
+    .status-badge{display:inline-block;padding:8px 18px;border-radius:20px;font-size:14px;font-weight:700}
+    .s-green{background:#dcfce7;color:#15803d}
+    .s-red{background:#fee2e2;color:#dc2626}
+    .s-orange{background:#fef3c7;color:#b45309}
+
+    .piece{font-size:19px;font-weight:700}
+    .date-note{font-size:13px;color:#bbb;margin-bottom:14px}
+
+    .tags{display:flex;flex-wrap:wrap;gap:8px}
+    .tag{padding:7px 14px;border-radius:20px;font-size:13px;font-weight:600}
+    .t-blue{background:#eff6ff;color:#1d4ed8}
+    .t-green{background:#f0fdf4;color:#166534}
+    .t-purple{background:#fdf4ff;color:#7e22ce}
+
+    .rec-link{display:block;background:#f0f4ff;color:#1d4ed8;text-decoration:none;padding:13px 16px;border-radius:10px;font-size:15px;font-weight:700;text-align:center;margin-top:10px}
+    .comment{font-size:15px;color:#555;line-height:1.7;font-style:italic}
+
+    .logout{display:block;text-align:center;padding:20px;color:#ccc;font-size:14px;cursor:pointer;margin-bottom:8px}
+
+    .spinner{text-align:center;padding:30px;color:#bbb;font-size:15px}
+  </style>
+</head>
+<body>
+
+<div id="view-login">
+  <div class="login-header">
+    <h1>Dziennik zajęć</h1>
+    <p>szkola.piumosso.pl</p>
+  </div>
+  <div class="login-card">
+    <div class="login-title">Witaj!</div>
+    <div class="login-sub">Wpisz hasło otrzymane od nauczyciela, żeby zobaczyć postępy swojego dziecka.</div>
+    <div class="err" id="err">Hasło nieprawidłowe. Spróbuj ponownie.</div>
+    <input type="text" id="pass-input" placeholder="Piumosso-1234" autocomplete="off" autocorrect="off" autocapitalize="none">
+    <button class="btn" onclick="login()">Zaloguj się</button>
+  </div>
+</div>
+
+<div id="view-lesson" style="display:none">
+  <div class="student-top">
+    <h2 id="v-name"></h2>
+    <p id="v-inst"></p>
+  </div>
+  <div id="lesson-cards"></div>
+  <div class="logout" onclick="logout()">Wyloguj się</div>
+</div>
+
+<script>
+const RAW='https://raw.githubusercontent.com/Piotr-piumosso/Pi-Mosso-szkola/main/data';
+
+async function login(){
+  const pass=document.getElementById('pass-input').value.trim();
+  if(!pass)return;
+  document.getElementById('err').style.display='none';
+  try{
+    const r=await fetch(RAW+'/students.json?t='+Date.now());
+    if(!r.ok)throw'fetch';
+    const data=await r.json();
+    const student=data.students.find(s=>s.parentPassword===pass);
+    if(!student){document.getElementById('err').style.display='block';return;}
+    await showLesson(student);
+  }catch(e){
+    document.getElementById('err').textContent='Błąd połączenia. Sprawdź internet.';
+    document.getElementById('err').style.display='block';
+  }
+}
+
+async function showLesson(student){
+  document.getElementById('v-name').textContent=student.name;
+  document.getElementById('v-inst').textContent=student.instrument;
+  document.getElementById('view-login').style.display='none';
+  document.getElementById('view-lesson').style.display='block';
+  document.getElementById('lesson-cards').innerHTML='<div class="spinner">Ładowanie...</div>';
+  try{
+    const r=await fetch(`${RAW}/lessons/${student.id}.json?t=`+Date.now());
+    if(!r.ok)throw'fetch';
+    const data=await r.json();
+    if(!data.lessons||!data.lessons.length){document.getElementById('lesson-cards').innerHTML='<div class="card"><p style="color:#bbb;text-align:center;padding:20px">Brak zapisanych zajęć.</p></div>';return;}
+    renderLesson(data.lessons[0]);
+  }catch(e){document.getElementById('lesson-cards').innerHTML='<div class="card"><p style="color:#bbb;text-align:center;padding:20px">Błąd ładowania.</p></div>';}
+}
+
+const SL={
+  prepared:{text:'✓ Przygotowanie',cls:'s-green'},
+  unprepared:{text:'✗ Nieprzygotowanie',cls:'s-red'},
+  notified:{text:'⚠ Zgłoszenie nieprzygotowania',cls:'s-orange'}
+};
+
+function tag(txt,cls){return`<span class="tag ${cls}">${txt}</span>`;}
+
+function renderLesson(l){
+  const date=new Date(l.date).toLocaleDateString('pl-PL',{day:'numeric',month:'long',year:'numeric'});
+  const s=SL[l.status]||{text:l.status,cls:''};
+  let html=`<div class="card"><div class="date-note">Ostatnie zajęcia · ${date}</div><span class="status-badge ${s.cls}">${s.text}</span>`;
+  if(l.piece)html+=`<div style="margin-top:16px"><div class="section-label">Aktualny utwór</div><div class="piece">${l.piece}</div></div>`;
+  html+=`</div>`;
+
+  if(l.technical&&l.technical.length)
+    html+=`<div class="card"><div class="section-label">Uwagi techniczne</div><div class="tags">${l.technical.map(t=>tag(t,'t-blue')).join('')}</div></div>`;
+
+  if(l.practice&&l.practice.length){
+    html+=`<div class="card"><div class="section-label">Ćwicz w domu</div><div class="tags">${l.practice.map(t=>tag(t,'t-green')).join('')}</div>`;
+    if(l.recordingUrl)html+=`<a href="${l.recordingUrl}" target="_blank" rel="noopener" class="rec-link">▶ Posłuchaj nagrania</a>`;
+    html+=`</div>`;
+  }
+
+  if(l.posture&&l.posture.length)
+    html+=`<div class="card"><div class="section-label">Postawa</div><div class="tags">${l.posture.map(t=>tag(t,'t-purple')).join('')}</div></div>`;
+
+  if(l.comment)
+    html+=`<div class="card"><div class="section-label">Notatka od nauczyciela</div><div class="comment">"${l.comment}"</div></div>`;
+
+  document.getElementById('lesson-cards').innerHTML=html;
+}
+
+function logout(){
+  document.getElementById('view-login').style.display='block';
+  document.getElementById('view-lesson').style.display='none';
+  document.getElementById('pass-input').value='';
+}
+
+// Auto-login z URL: rodzic/?haslo=Piumosso-1234
+const p=new URLSearchParams(location.search).get('haslo');
+if(p){document.getElementById('pass-input').value=p;login();}
+
+// Enter key
+document.getElementById('pass-input').addEventListener('keydown',e=>{if(e.key==='Enter')login();});
+</script>
+</body>
+</html>
