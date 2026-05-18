@@ -3,834 +3,168 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lekcje Muzyki w Poznaniu i Online – Piotr Górski | szkola.piumosso.pl</title>
-  <meta name="description" content="Lekcje fortepianu, saksofonu i akordeonu w Poznaniu i online. Piotr Górski – Magister Akademii Muzycznej z wyróżnieniem. Pierwsza lekcja próbna bez zobowiązań. 781 010 229">
-  <link rel="canonical" href="https://szkola.piumosso.pl">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>Lekcje Muzyki Poznań – Piotr Górski</title>
+  <meta name="description" content="Lekcje fortepianu, saksofonu i akordeonu w Poznaniu i online. 100 zł / 45 min. Pierwsza lekcja próbna bez zobowiązań. Tel. 781 010 229">
   <style>
-    :root {
-      --navy: #1C1C2E;
-      --gold: #C5973A;
-      --gold-light: #F5E8CF;
-      --slate: #475569;
-      --light-slate: #94A3B8;
-      --bg: #FAFAF7;
-      --white: #FFFFFF;
-      --border: #E2E8F0;
-    }
-
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
+    *{margin:0;padding:0;box-sizing:border-box}
 
     body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--navy);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, sans-serif;
+      background: #fff;
+      color: #111;
+      font-size: 17px;
       line-height: 1.6;
-      font-size: 16px;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      background: rgba(250,250,247,0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      z-index: 100;
-      padding: 0 24px;
-    }
-
-    .nav-inner {
-      max-width: 900px;
+      max-width: 600px;
       margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 60px;
     }
 
-    .nav-logo {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--navy);
-      letter-spacing: 1px;
-      text-decoration: none;
-      text-transform: uppercase;
-    }
-
-    .nav-logo em {
-      color: var(--gold);
-      font-style: normal;
-    }
-
-    .nav-cta {
-      background: var(--navy);
-      color: var(--white);
-      font-size: 13px;
-      font-weight: 700;
-      padding: 8px 20px;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: background 0.2s;
-      white-space: nowrap;
-    }
-
-    .nav-cta:hover { background: #2d2d45; }
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      background: var(--navy);
-      display: flex;
-      align-items: center;
-      padding: 80px 24px 60px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -100px; right: -100px;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(197,151,58,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 60px;
-      align-items: center;
+    img {
       width: 100%;
+      height: 300px;
+      object-fit: cover;
+      object-position: center 12%;
+      display: block;
     }
 
-    .hero-text {}
+    .hero {
+      padding: 22px 20px 20px;
+      border-bottom: 1px solid #eee;
+    }
 
-    .hero-eyebrow {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 20px;
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-sub {
+      font-size: 13px;
+      color: #888;
+      margin-top: 3px;
+      letter-spacing: 0.3px;
     }
 
     .hero-instruments {
-      font-size: clamp(36px, 6vw, 64px);
-      font-weight: 900;
-      color: var(--white);
-      line-height: 1.05;
-      letter-spacing: -2px;
-      margin-bottom: 24px;
-    }
-
-    .hero-instruments .dot {
-      color: var(--gold);
-      font-weight: 300;
-      margin: 0 6px;
-    }
-
-    .hero-tagline {
-      font-size: 18px;
-      font-weight: 400;
-      color: rgba(255,255,255,0.7);
-      line-height: 1.65;
-      max-width: 460px;
-      margin-bottom: 36px;
-    }
-
-    .hero-tagline strong {
-      color: rgba(255,255,255,0.95);
-      font-weight: 600;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .btn-primary {
-      display: inline-block;
-      background: var(--gold);
-      color: var(--navy);
-      font-size: 15px;
-      font-weight: 800;
-      padding: 14px 28px;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
-
-    .btn-primary:hover { opacity: 0.9; }
-
-    .btn-secondary {
-      display: inline-block;
-      background: transparent;
-      color: rgba(255,255,255,0.75);
-      font-size: 15px;
-      font-weight: 600;
-      padding: 14px 28px;
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.2);
-      text-decoration: none;
-      transition: border-color 0.2s, color 0.2s;
-    }
-
-    .btn-secondary:hover {
-      border-color: rgba(255,255,255,0.5);
-      color: white;
-    }
-
-    .hero-photo {
-      width: 240px;
-      flex-shrink: 0;
-    }
-
-    .hero-photo img {
-      width: 240px;
-      height: 300px;
-      object-fit: cover;
-      object-position: center top;
-      border-radius: 8px;
-      display: block;
-      border: 3px solid rgba(197,151,58,0.3);
-    }
-
-    /* ── SECTIONS ── */
-    section {
-      padding: 80px 24px;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .section-eyebrow {
-      font-size: 11px;
+      font-size: 20px;
       font-weight: 700;
-      letter-spacing: 3px;
+      margin-top: 14px;
+      color: #111;
+    }
+
+    .hero-price {
+      display: inline-block;
+      background: #111;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-top: 12px;
+    }
+
+    .section {
+      padding: 26px 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
-      color: var(--gold);
+      color: #aaa;
       margin-bottom: 12px;
     }
 
-    .section-heading {
-      font-size: clamp(26px, 4vw, 38px);
-      font-weight: 800;
-      color: var(--navy);
-      line-height: 1.2;
-      letter-spacing: -0.5px;
-      margin-bottom: 16px;
-    }
-
-    .section-sub {
-      font-size: 16px;
-      color: var(--slate);
+    .section p {
+      font-size: 17px;
       line-height: 1.7;
-      max-width: 540px;
+      color: #222;
     }
 
-    /* ── INSTRUMENTS SECTION ── */
-    #instrumenty { background: var(--white); }
-
-    .instruments-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-top: 48px;
+    .section p + p {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid #f0f0f0;
     }
 
-    .instrument-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 32px 24px;
-      text-align: center;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .instrument-card:hover {
-      border-color: var(--gold);
-      box-shadow: 0 4px 20px rgba(197,151,58,0.12);
-    }
-
-    .instrument-icon {
-      font-size: 36px;
-      margin-bottom: 16px;
-      display: block;
-    }
-
-    .instrument-name {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--navy);
-      margin-bottom: 10px;
-    }
-
-    .instrument-desc {
-      font-size: 14px;
-      color: var(--slate);
+    .cred {
+      font-size: 15px;
+      color: #555;
       line-height: 1.65;
     }
 
-    /* ── ABOUT SECTION ── */
-    #o-mnie { background: var(--bg); }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 60px;
-      align-items: start;
-      margin-top: 48px;
-    }
-
-    .about-photo {
-      width: 220px;
-      flex-shrink: 0;
-    }
-
-    .about-photo img {
-      width: 220px;
-      height: 280px;
-      object-fit: cover;
-      object-position: center top;
-      border-radius: 8px;
-      display: block;
-    }
-
-    .about-content {}
-
-    .about-credential {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--gold-light);
-      border: 1px solid rgba(197,151,58,0.3);
-      padding: 8px 16px;
-      border-radius: 6px;
-      margin-bottom: 24px;
-    }
-
-    .about-credential-dot {
-      width: 6px; height: 6px;
-      background: var(--gold);
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .about-credential span {
-      font-size: 13px;
-      font-weight: 700;
-      color: #8B6914;
-    }
-
-    .about-text {
-      font-size: 16px;
-      color: var(--slate);
-      line-height: 1.75;
-      margin-bottom: 20px;
-    }
-
-    .about-text strong {
-      color: var(--navy);
-      font-weight: 700;
-    }
-
-    .also-teaches-list {
-      background: var(--navy);
-      border-radius: 10px;
-      padding: 24px;
-      margin-top: 28px;
-    }
-
-    .also-teaches-list h4 {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 14px;
-    }
-
-    .teaches-items {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .teaches-tag {
-      background: rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.85);
-      font-size: 13px;
-      font-weight: 600;
-      padding: 6px 14px;
-      border-radius: 20px;
-    }
-
-    /* ── PRICING ── */
-    #cennik { background: var(--navy); }
-
-    #cennik .section-heading { color: var(--white); }
-
-    #cennik .section-sub { color: rgba(255,255,255,0.65); max-width: 480px; }
-
-    .pricing-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 14px;
-      padding: 48px;
-      max-width: 520px;
-      margin-top: 48px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .pricing-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--gold);
-    }
-
-    .pricing-amount {
-      font-size: 56px;
-      font-weight: 900;
-      color: var(--white);
-      letter-spacing: -2px;
-      line-height: 1;
-    }
-
-    .pricing-amount span {
-      font-size: 22px;
-      font-weight: 400;
-      color: rgba(255,255,255,0.5);
-      margin-left: 4px;
-    }
-
-    .pricing-trial {
-      margin-top: 16px;
-      font-size: 15px;
-      color: var(--gold);
-      font-weight: 600;
-    }
-
-    .pricing-desc {
-      margin-top: 10px;
-      font-size: 14px;
-      color: rgba(255,255,255,0.55);
-      line-height: 1.6;
-    }
-
-    .pricing-features {
-      margin-top: 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .pricing-feature {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 14px;
-      color: rgba(255,255,255,0.8);
-    }
-
-    .pricing-check {
-      width: 20px; height: 20px;
-      background: rgba(197,151,58,0.2);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      color: var(--gold);
-      font-size: 10px;
-      font-weight: 800;
-    }
-
-    .pricing-cta {
-      margin-top: 32px;
-      display: inline-block;
-      background: var(--gold);
-      color: var(--navy);
-      font-size: 15px;
-      font-weight: 800;
-      padding: 14px 32px;
-      border-radius: 8px;
-      text-decoration: none;
-    }
-
-    .pricing-cta:hover { opacity: 0.9; }
-
-    /* ── CONTACT ── */
-    #kontakt { background: var(--white); }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      margin-top: 48px;
-    }
-
-    .contact-info {}
-
-    .contact-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      margin-bottom: 24px;
-    }
-
-    .contact-icon-wrap {
-      width: 40px; height: 40px;
-      background: var(--gold-light);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    .contact-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--light-slate);
-      margin-bottom: 4px;
-    }
-
-    .contact-value {
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--navy);
-      text-decoration: none;
-    }
-
-    .contact-value:hover { color: var(--gold); }
-
-    .contact-note {
-      font-size: 13px;
-      color: var(--slate);
-      line-height: 1.6;
-      margin-top: 28px;
-      padding: 16px;
-      background: var(--bg);
-      border-radius: 8px;
-      border-left: 3px solid var(--gold);
-    }
-
-    .contact-form {}
-
-    .form-group {
-      margin-bottom: 16px;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: var(--slate);
-      margin-bottom: 6px;
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      font-size: 15px;
-      font-family: inherit;
-      color: var(--navy);
-      background: var(--bg);
-      transition: border-color 0.2s;
-      outline: none;
-    }
-
-    .form-input:focus {
-      border-color: var(--gold);
-    }
-
-    textarea.form-input {
-      resize: vertical;
-      min-height: 100px;
-    }
-
-    .form-submit {
-      width: 100%;
-      background: var(--navy);
-      color: var(--white);
-      font-size: 15px;
-      font-weight: 800;
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.2s;
-    }
-
-    .form-submit:hover { background: #2d2d45; }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--navy);
-      padding: 32px 24px;
+    .cta {
+      padding: 28px 20px 48px;
       text-align: center;
     }
 
-    .footer-inner {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .footer-logo {
-      font-size: 13px;
+    .cta-btn {
+      display: block;
+      background: #111;
+      color: #fff;
+      font-size: 17px;
       font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--white);
-      margin-bottom: 8px;
+      padding: 18px 20px;
+      border-radius: 14px;
+      text-decoration: none;
+      letter-spacing: 0.2px;
+      margin-bottom: 28px;
     }
 
-    .footer-logo em {
-      color: var(--gold);
-      font-style: normal;
+    .cta-phone {
+      display: block;
+      font-size: 32px;
+      font-weight: 900;
+      color: #111;
+      text-decoration: none;
+      letter-spacing: -1px;
+      margin-bottom: 14px;
     }
 
-    .footer-tagline {
-      font-size: 13px;
-      color: rgba(255,255,255,0.4);
+    .cta-details {
+      font-size: 14px;
+      color: #999;
+      line-height: 2;
     }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 700px) {
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-photo { display: none; }
-      .instruments-grid { grid-template-columns: 1fr; }
-      .about-grid { grid-template-columns: 1fr; }
-      .about-photo { display: none; }
-      .contact-grid { grid-template-columns: 1fr; }
-      .pricing-card { padding: 32px 24px; }
+    .cta-details a {
+      color: #666;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-inner">
-      <a href="#" class="nav-logo">Più <em>Mosso</em></a>
-      <a href="tel:781010229" class="nav-cta">Zadzwoń: 781 010 229</a>
+  <img src="gorski-portret.jpg" alt="Piotr Górski – lekcje muzyki Poznań" loading="eager" fetchpriority="high">
+
+  <div class="hero">
+    <h1>Piotr Górski<br>Lekcje Muzyki Poznań</h1>
+    <div class="hero-sub">Stacjonarnie i online</div>
+    <div class="hero-instruments">Fortepian | Saksofon | Akordeon</div>
+    <span class="hero-price">100 zł / 45 min</span>
+  </div>
+
+  <div class="section">
+    <div class="label">Dla kogo</div>
+    <p>Chcesz grać ulubione piosenki ze słuchu, improwizować i po prostu dobrze się przy tym bawić? Tu nie ma szkolnego stresu ani sztywnych ćwiczeń. Uczysz się tego, co chcesz, w swoim tempie.</p>
+    <p>Masz zaległości z teorii albo szykujesz się do egzaminów w szkole muzycznej? Szybko nadrobisz harmonię, kształcenie słuchu i wszystko, co sprawia kłopot.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">O mnie</div>
+    <p class="cred">Magister Akademii Muzycznej w Poznaniu z wyróżnieniem · Laureat międzynarodowych konkursów muzycznych.</p>
+  </div>
+
+  <div class="cta">
+    <a href="tel:781010229" class="cta-btn">Zarezerwuj lekcję próbną</a>
+    <a href="tel:781010229" class="cta-phone">781 010 229</a>
+    <div class="cta-details">
+      <a href="mailto:kontakt@piumosso.pl">kontakt@piumosso.pl</a><br>
+      szkola.piumosso.pl
     </div>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-text">
-        <div class="hero-eyebrow">Lekcje muzyki · Poznań &amp; Online</div>
-        <div class="hero-instruments">
-          Fortepian<span class="dot">•</span>Saksofon<span class="dot">•</span>Akordeon
-        </div>
-        <p class="hero-tagline">
-          Graj ulubione utwory ze słuchu, improwizuj i rozwijaj własny styl – bez nudy i bez szkolnego stresu. <strong>Lekcje dla dzieci, młodzieży i dorosłych.</strong>
-        </p>
-        <div class="hero-actions">
-          <a href="tel:781010229" class="btn-primary">Umów lekcję próbną</a>
-          <a href="#o-mnie" class="btn-secondary">Dowiedz się więcej</a>
-        </div>
-      </div>
-      <div class="hero-photo">
-        <img src="gorski-portret.jpg" alt="Piotr Górski – nauczyciel muzyki">
-      </div>
-    </div>
-  </section>
-
-  <!-- INSTRUMENTS -->
-  <section id="instrumenty">
-    <div class="container">
-      <div class="section-eyebrow">Czego uczę</div>
-      <div class="section-heading">Fortepian, Saksofon i Akordeon</div>
-      <p class="section-sub">Zacznij od instrumentu, który Cię pociąga. Nauczę Cię grać to, co chcesz – nie tylko to, co jest w podręczniku.</p>
-
-      <div class="instruments-grid">
-        <div class="instrument-card">
-          <span class="instrument-icon">🎹</span>
-          <div class="instrument-name">Fortepian</div>
-          <p class="instrument-desc">Od pierwszych dźwięków po zaawansowany repertuar. Klasyka, pop, jazz – gram to, co lubisz.</p>
-        </div>
-        <div class="instrument-card">
-          <span class="instrument-icon">🎷</span>
-          <div class="instrument-name">Saksofon</div>
-          <p class="instrument-desc">Instrument, który daje się słyszeć. Nauczę Cię od podstaw dźwięku po płynną melodię i improwizację.</p>
-        </div>
-        <div class="instrument-card">
-          <span class="instrument-icon">🪗</span>
-          <div class="instrument-name">Akordeon</div>
-          <p class="instrument-desc">Wyjątkowy i wszechstronny – od tradycji po nowoczesne brzmienia. Nauka przynosi szybkie efekty.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="o-mnie">
-    <div class="container">
-      <div class="section-eyebrow">O mnie</div>
-      <div class="section-heading">Piotr Górski</div>
-
-      <div class="about-grid">
-        <div class="about-photo">
-          <img src="gorski-portret.jpg" alt="Piotr Górski">
-        </div>
-
-        <div class="about-content">
-          <div class="about-credential">
-            <div class="about-credential-dot"></div>
-            <span>Magister Akademii Muzycznej w Poznaniu z wyróżnieniem</span>
-          </div>
-
-          <p class="about-text">
-            Jestem muzykiem i nauczycielem z dyplomem Akademii Muzycznej w Poznaniu ukończonym z wyróżnieniem, laureatem międzynarodowych konkursów muzycznych. Uczę w sposób, który daje rezultaty – bo wiem, że każda osoba uczy się inaczej.
-          </p>
-
-          <p class="about-text">
-            Na moich lekcjach nie ma presji. Pracujemy nad <strong>Twoim repertuarem</strong>, Twoim tempem i Twoimi celami. Jeśli chcesz grać ze słuchu, improwizować albo po prostu zagrać ulubioną piosenkę – to dobry adres.
-          </p>
-
-          <div class="also-teaches-list">
-            <h4>Uczę również</h4>
-            <div class="teaches-items">
-              <span class="teaches-tag">Teoria muzyki</span>
-              <span class="teaches-tag">Harmonia</span>
-              <span class="teaches-tag">Kształcenie słuchu</span>
-              <span class="teaches-tag">Improwizacja</span>
-              <span class="teaches-tag">Egzaminy szkolne</span>
-              <span class="teaches-tag">Gra ze słuchu</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRICING -->
-  <section id="cennik">
-    <div class="container">
-      <div class="section-eyebrow" style="color: var(--gold);">Cennik</div>
-      <div class="section-heading">Jasne zasady, żadnych niespodzianek</div>
-      <p class="section-sub">Jedna cena, pełna lekcja, prawdziwy postęp. Pierwsza lekcja jest próbna – jeśli nie poczujesz, że to działa, nie tracisz nic poza 45 minutami.</p>
-
-      <div class="pricing-card">
-        <div class="pricing-amount">100 zł <span>/ 45 min</span></div>
-        <div class="pricing-trial">Pierwsza lekcja próbna – bez dalszych zobowiązań</div>
-        <div class="pricing-desc">Cena za lekcję indywidualną. Stacjonarnie w Poznaniu lub online przez Zoom / Google Meet.</div>
-
-        <div class="pricing-features">
-          <div class="pricing-feature">
-            <div class="pricing-check">✓</div>
-            Lekcje stacjonarne w Poznaniu
-          </div>
-          <div class="pricing-feature">
-            <div class="pricing-check">✓</div>
-            Lekcje online (Zoom / Google Meet)
-          </div>
-          <div class="pricing-feature">
-            <div class="pricing-check">✓</div>
-            Program dopasowany do Twoich celów
-          </div>
-          <div class="pricing-feature">
-            <div class="pricing-check">✓</div>
-            Każdy wiek i poziom zaawansowania
-          </div>
-        </div>
-
-        <a href="tel:781010229" class="pricing-cta">Zadzwoń i umów lekcję próbną</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="kontakt">
-    <div class="container">
-      <div class="section-eyebrow">Kontakt</div>
-      <div class="section-heading">Napisz lub zadzwoń</div>
-
-      <div class="contact-grid">
-        <div class="contact-info">
-          <div class="contact-item">
-            <div class="contact-icon-wrap">📞</div>
-            <div>
-              <div class="contact-label">Telefon</div>
-              <a href="tel:781010229" class="contact-value">781 010 229</a>
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <div class="contact-icon-wrap">✉️</div>
-            <div>
-              <div class="contact-label">E-mail</div>
-              <a href="mailto:kontakt@piumosso.pl" class="contact-value">kontakt@piumosso.pl</a>
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <div class="contact-icon-wrap">🌐</div>
-            <div>
-              <div class="contact-label">Strona</div>
-              <a href="https://szkola.piumosso.pl" class="contact-value">szkola.piumosso.pl</a>
-            </div>
-          </div>
-
-          <div class="contact-note">
-            Odpowiadam zwykle tego samego dnia. Możesz też napisać SMS-a, jeśli w danej chwili nie odbiorę.
-          </div>
-        </div>
-
-        <div class="contact-form">
-          <form action="mailto:kontakt@piumosso.pl" method="get" enctype="text/plain">
-            <div class="form-group">
-              <label class="form-label" for="imie">Imię</label>
-              <input class="form-input" type="text" id="imie" name="subject" placeholder="Twoje imię">
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="tel">Telefon lub e-mail</label>
-              <input class="form-input" type="text" id="tel" placeholder="Jak się z Tobą skontaktować?">
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="wiad">Wiadomość</label>
-              <textarea class="form-input" id="wiad" name="body" placeholder="Którym instrumentem jesteś zainteresowany(a)? Masz jakieś pytania?"></textarea>
-            </div>
-            <button type="submit" class="form-submit">Wyślij wiadomość</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-logo">Più <em>Mosso</em></div>
-      <div class="footer-tagline">Lekcje muzyki w Poznaniu i online · szkola.piumosso.pl · 781 010 229</div>
-    </div>
-  </footer>
+  </div>
 
 </body>
 </html>
